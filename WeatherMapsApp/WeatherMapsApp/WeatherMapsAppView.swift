@@ -47,6 +47,7 @@ class WeatherMapsAppView: UIViewController {
         button.backgroundColor = #colorLiteral(red: 0.2535246611, green: 0.5639368892, blue: 0.5914651752, alpha: 1)
         button.titleLabel?.numberOfLines = 2
         button.setTitle("See other fragment", for: .normal)
+        button.addTarget(self, action: #selector(retrieveData), for: .touchUpInside)
         button.tintColor = .white
         return button
     }()
@@ -93,6 +94,10 @@ class WeatherMapsAppView: UIViewController {
     
     @objc func callService() {
         didServiceButtonPressed1()
+    }
+    
+    @objc func retrieveData() {
+        presenter?.getStoredData()
     }
 }
 

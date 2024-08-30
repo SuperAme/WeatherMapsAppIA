@@ -14,9 +14,17 @@ protocol WeatherMapsAppPresenterProtocol {
     
     func viewDidLoad()
     func didServiceButtonPressed()
+    func getDataFromService(with weather: WeatherResponse)
+    func getStoredData()
+    func goToDetailView()
+    func sendData(_ weather: [WeatherResponse])
 }
 
 class WeatherMapsAppPresenter: WeatherMapsAppPresenterProtocol {
+    func sendData(_ weather: [WeatherResponse]) {
+        
+    }
+    
     var view: WeatherMapsAppViewProtocol?
     
     var interactor: WeatherMapsAppInteractorProtocol?
@@ -28,5 +36,18 @@ class WeatherMapsAppPresenter: WeatherMapsAppPresenterProtocol {
     
     func didServiceButtonPressed() {
         interactor?.getWeather()
+    }
+    
+    func getDataFromService(with weather: WeatherResponse) {
+        
+    }
+    
+    func getStoredData() {
+        let elements = interactor?.returnElements()
+        goToDetailView()
+    }
+    
+    func goToDetailView() {
+        router?.goToListOfService()
     }
 }
