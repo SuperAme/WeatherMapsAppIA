@@ -10,6 +10,8 @@ import UIKit
 protocol WeatherMapsAppRouterProtocol {
     var entry: WeatherMapsAppView? { get }
     static func startExecution() -> WeatherMapsAppRouterProtocol
+    
+    func goToListOfService()
 }
 
 class WeatherMapsAppRouter: WeatherMapsAppRouterProtocol {
@@ -34,5 +36,10 @@ class WeatherMapsAppRouter: WeatherMapsAppRouterProtocol {
         return router
     }
     
-    
+    func goToListOfService() {
+        let router = WeatherMapsListRouter.startExecution()
+        let weatherListVc = router.entry!
+        
+        self.entry?.present(weatherListVc, animated: true)
+    }
 }
