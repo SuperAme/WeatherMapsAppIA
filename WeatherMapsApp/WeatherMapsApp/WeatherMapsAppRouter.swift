@@ -16,10 +16,19 @@ class WeatherMapsAppRouter: WeatherMapsAppRouterProtocol {
     var entry: WeatherMapsAppView?
     
     static func startExecution() -> WeatherMapsAppRouterProtocol {
-        let mainStoryBoard = UIStoryboard(name: "MainWeatherMapAppView", bundle: nil)
-        let view = mainStoryBoard.instantiateViewController(withIdentifier: "WeatherMapsAppViewId") as! WeatherMapsAppView
+        var view: WeatherMapsAppView = WeatherMapsAppView()
         
+        var interactor = WeatherMapsAppInteractor()
+        var presenter = WeatherMapsAppPresenter()
         let router = WeatherMapsAppRouter()
+        
+        view.presenter = presenter
+        
+        interactor.presenter = presenter
+        
+        presenter.view = view
+        presenter.interactor = interactor
+        presenter.router = router
         
         router.entry = view
         return router
