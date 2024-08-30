@@ -1,5 +1,5 @@
 //
-//  WeatherMapsAppPresenter.swift
+//  WeatherMapsMainPresenter.swift
 //  WeatherMapsApp
 //
 //  Created by Americo Meneses on 28/08/24.
@@ -14,14 +14,15 @@ protocol WeatherMapsAppPresenterProtocol {
     
     func viewDidLoad()
     func didServiceButtonPressed()
-    func getDataFromService(with weather: WeatherResponse)
+    func getDataFromService(with weather: WeatherMapsEntity)
     func getStoredData()
-    func goToDetailView()
-    func sendData(_ weather: [WeatherResponse])
+    func goToDetailView(with weather: [WeatherMapsEntity]?)
+    func sendData(_ weather: [WeatherMapsEntity])
+    func goToWeatherMaps()
 }
 
-class WeatherMapsAppPresenter: WeatherMapsAppPresenterProtocol {
-    func sendData(_ weather: [WeatherResponse]) {
+class WeatherMapsMainPresenter: WeatherMapsAppPresenterProtocol {
+    func sendData(_ weather: [WeatherMapsEntity]) {
         
     }
     
@@ -38,16 +39,20 @@ class WeatherMapsAppPresenter: WeatherMapsAppPresenterProtocol {
         interactor?.getWeather()
     }
     
-    func getDataFromService(with weather: WeatherResponse) {
+    func getDataFromService(with weather: WeatherMapsEntity) {
         
     }
     
     func getStoredData() {
         let elements = interactor?.returnElements()
-        goToDetailView()
+        goToDetailView(with: elements)
     }
     
-    func goToDetailView() {
-        router?.goToListOfService()
+    func goToDetailView(with weather: [WeatherMapsEntity]?) {
+        router?.goToListOfService(with: weather)
+    }
+    
+    func goToWeatherMaps() {
+        router?.goToWeatherMapsModule()
     }
 }

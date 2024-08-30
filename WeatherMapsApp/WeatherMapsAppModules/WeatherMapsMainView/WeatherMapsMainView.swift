@@ -1,5 +1,5 @@
 //
-//  WeatherMapsAppView.swift
+//  WeatherMapsMainView.swift
 //  WeatherMapsApp
 //
 //  Created by Americo Meneses on 28/08/24.
@@ -11,8 +11,8 @@ protocol WeatherMapsAppViewProtocol: AnyObject {
     func didServiceButtonPressed1()
 }
 
-class WeatherMapsAppView: UIViewController {
-    var presenter: WeatherMapsAppPresenterProtocol? = WeatherMapsAppPresenter()
+class WeatherMapsMainView: UIViewController {
+    var presenter: WeatherMapsAppPresenterProtocol? = WeatherMapsMainPresenter()
     
     lazy var backgroundImage: UIImageView = {
         let image = UIImageView()
@@ -37,6 +37,7 @@ class WeatherMapsAppView: UIViewController {
         button.backgroundColor = #colorLiteral(red: 0.2535246611, green: 0.5639368892, blue: 0.5914651752, alpha: 1)
         button.tintColor = .white
         button.setTitle("See Maps", for: .normal)
+        button.addTarget(self, action: #selector(callMaps), for: .touchUpInside)
         return button
     }()
     
@@ -99,13 +100,15 @@ class WeatherMapsAppView: UIViewController {
     @objc func retrieveData() {
         presenter?.getStoredData()
     }
+    
+    @objc func callMaps() {
+        presenter?.goToWeatherMaps()
+    }
 }
 
-extension WeatherMapsAppView: WeatherMapsAppViewProtocol {
+extension WeatherMapsMainView: WeatherMapsAppViewProtocol {
     func didServiceButtonPressed1() {
         presenter?.didServiceButtonPressed()
     }
-    
-    
 }
 
