@@ -22,7 +22,7 @@ class WeatherMapsMainInteractor: WeatherMapsAppInteractorProtocol {
     var numOfElements = 0
     
     func getWeather() {
-        guard let url = URL(string: "https://open-weather13.p.rapidapi.com/city/landon/EN?rapidapi-key=5a818edb79msh49dcdaece3f3bebp1a8177jsnbc89949b7f5e") else { return }
+        guard let url = URL(string: "https://open-weather13.p.rapidapi.com/city/paris/EN?rapidapi-key=5a818edb79msh49dcdaece3f3bebp1a8177jsnbc89949b7f5e") else { return }
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             guard let data = data, error == nil else { return  }
             

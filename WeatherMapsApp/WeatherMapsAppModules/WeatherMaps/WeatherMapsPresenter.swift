@@ -25,7 +25,7 @@ class WeatherMapsPresenter: WeatherMapsPresenterProtocol {
     
     func viewDidLoad() {
         view?.showLoader()
-        interactor?.getLongittudeAndLattitude()
+        interactor?.getLongitudeAndLatitude()
     }
     
     func didRetriveLongitudeAndLattitude(with longitude: Double, and latitude: Double, name: String) {

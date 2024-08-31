@@ -12,35 +12,27 @@ protocol WeatherMapsAppPresenterProtocol {
     var interactor: WeatherMapsAppInteractorProtocol? { get set }
     var router: WeatherMapsAppRouterProtocol? { get set }
     
-    func viewDidLoad()
     func didServiceButtonPressed()
     func getDataFromService(with weather: WeatherMapsEntity)
     func getStoredData()
     func goToDetailView(with weather: [WeatherMapsEntity]?)
-    func sendData(_ weather: [WeatherMapsEntity])
     func goToWeatherMaps()
 }
 
 class WeatherMapsMainPresenter: WeatherMapsAppPresenterProtocol {
-    func sendData(_ weather: [WeatherMapsEntity]) {
-        
-    }
-    
     var view: WeatherMapsAppViewProtocol?
     
     var interactor: WeatherMapsAppInteractorProtocol?
     
     var router: WeatherMapsAppRouterProtocol?
     
-    func viewDidLoad() {
-    }
-    
     func didServiceButtonPressed() {
+        view?.showLoader()
         interactor?.getWeather()
     }
     
     func getDataFromService(with weather: WeatherMapsEntity) {
-        
+        view?.hideLoader()
     }
     
     func getStoredData() {

@@ -8,11 +8,14 @@
 import UIKit
 
 protocol WeatherMapsAppViewProtocol: AnyObject {
-    func didServiceButtonPressed1()
+    func showLoader()
+    func hideLoader()
 }
 
 class WeatherMapsMainView: UIViewController {
     var presenter: WeatherMapsAppPresenterProtocol? = WeatherMapsMainPresenter()
+    var loadingIndicator: UIActivityIndicatorView? = UIActivityIndicatorView()
+    var loader: UIAlertController? = UIAlertController()
     
     lazy var backgroundImage: UIImageView = {
         let image = UIImageView()
@@ -68,7 +71,6 @@ class WeatherMapsMainView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
-        presenter?.viewDidLoad()
     }
 
     func setupLayout() {
@@ -94,7 +96,7 @@ class WeatherMapsMainView: UIViewController {
     }
     
     @objc func callService() {
-        didServiceButtonPressed1()
+        presenter?.didServiceButtonPressed()
     }
     
     @objc func retrieveData() {
@@ -104,11 +106,38 @@ class WeatherMapsMainView: UIViewController {
     @objc func callMaps() {
         presenter?.goToWeatherMaps()
     }
+    
+    func showSuccesAlert() {
+        loader = UIAlertController(title: nil, message: "Service Executed Succesfully", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            self.dismiss(animated: true)
+        }
+        
+        loader?.addAction(okAction)
+        self.present(loader!, animated: true)
+    }
 }
 
 extension WeatherMapsMainView: WeatherMapsAppViewProtocol {
-    func didServiceButtonPressed1() {
-        presenter?.didServiceButtonPressed()
+    
+    func showLoader() {
+        loader = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+        loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator?.hidesWhenStopped = true
+        loadingIndicator?.style = UIActivityIndicatorView.Style.large
+        loadingIndicator?.startAnimating()
+        loader?.view.addSubview(loadingIndicator!)
+        self.present(loader!, animated: true)
+    }
+    
+    func hideLoader() {
+        if (loadingIndicator != nil){
+            DispatchQueue.main.async {
+                self.loadingIndicator?.stopAnimating()
+                self.loader?.dismiss(animated: true)
+            }
+        }
+        showSuccesAlert()
     }
 }
 

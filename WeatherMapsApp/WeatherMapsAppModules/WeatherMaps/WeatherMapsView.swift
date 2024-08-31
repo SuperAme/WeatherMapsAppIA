@@ -20,13 +20,31 @@ class WeatherMapsView: UIViewController {
     var loadingIndicator: UIActivityIndicatorView? = UIActivityIndicatorView()
     var loader: UIAlertController? = UIAlertController()
     
+    private lazy var backgroundView: UIView = {
+        let view = UIView()
+        
+        view.backgroundColor = .systemGray
+        
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGray
         presenter?.viewDidLoad()
+        layoutView()
     }
     
-    
+    private func layoutView() {
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(backgroundView)
+        
+        NSLayoutConstraint.activate([
+            backgroundView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+    }
 }
 
 extension WeatherMapsView: WeatherMapsViewProtocol {
@@ -37,7 +55,7 @@ extension WeatherMapsView: WeatherMapsViewProtocol {
             // coordinate -33.86,151.20 at zoom level 6.
             let camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 4.0)
             let mapView = GMSMapView.map(withFrame: self.view.frame, camera: camera)
-            self.view.addSubview(mapView)
+            backgroundView.addSubview(mapView)
 
             // Creates a marker in the center of the map.
             let marker = GMSMarker()
